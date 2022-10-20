@@ -4,8 +4,8 @@
 Bob -> Alice
 Alice -> Bob
 
-:Bob
-:Alice
+:Bob;
+:Alice;
 ```
 
 ## Getting started
