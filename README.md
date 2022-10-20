@@ -1,11 +1,10 @@
 # PythonProject
 
 ```plantuml
-Bob -> Alice
-Alice -> Bob
-
-:Bob;
-:Alice;
+start
+:n;
+:y;
+stop
 ```
 
 ## Getting started
