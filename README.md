@@ -2,8 +2,22 @@
 
 ```plantuml
 start
-:n;
-:y;
+: TCP_NODELAY set;
+: Connected to abrahambeltran.dev (147.182.187.44) port 80 (#0);
+: GET / HTTP/1.1;
+: Host: abrahambeltran.dev;
+: User-Agent: curl/7.68.0;
+: Accept: */*;
+: Mark bundle as not supporting multiuse;
+: HTTP/1.1 200 OK;
+: Server: nginx/1.18.0 (Ubuntu);
+: Date: Thu, 20 Oct 2022 14:36:52 GMT;
+: Content-Type: text/html;
+: Content-Length: 612;
+: Last-Modified: Tue, 18 Oct 2022 02:32:16 GMT;
+: Connection: keep-alive;
+: ETag: "634e1030-264";
+: Accept-Ranges: bytes;
 stop
 ```
 
