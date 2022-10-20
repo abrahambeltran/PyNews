@@ -1,6 +1,9 @@
 # PythonProject
 
-
+```plantuml
+Bob -> Alice
+Alice -> Bob
+```
 
 ## Getting started
 
