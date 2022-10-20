@@ -3,6 +3,9 @@
 ```plantuml
 Bob -> Alice
 Alice -> Bob
+
+:Bob
+:Alice
 ```
 
 ## Getting started
