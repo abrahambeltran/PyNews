@@ -2,11 +2,18 @@
 
 ## COP 4521
 Group# 15
+
 Members:
+
     Dipanwita Chakraborty Bhattacharya  dcb22i
+
     Abraham Beltran                     ab19bb
 
 ![](/illustration.png)
+
+##Security
+
+We have SSH keys implemented to limit who can access the servers in order to limit the exposure. IPs will also be whitelisted for access to the server as well in order to limit intrusion attempts. Login attempts will be managed by auto0 so although there may be possible zero day vulnerabilities, we are relying on their maintenance to keep our website secure after development.
 
 ## Getting started
 
