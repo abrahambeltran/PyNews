@@ -11,7 +11,13 @@ Members:
 
 ![](/illustration.png)
 
-##Security
+## curl abrahambeltran.dev (domain being used)
+
+Curl in this case works by verifying a secure socket layer (SSL) certificate with the local authorized certificate store after communicating to the server through the transport layer security (TLS) in order to initiate the handshake. In our example because the https forwarding has not been completed yet, it skips this step and immediately requests information from the server at the IP 147.182.187.44. By communicating through port 80 with TCP (in https this would be port 443 instead), curl uses the GET command to get information from the website. This then returns the html from the website to the user through the terminal.
+
+So to summarize, when curl is run, the client sends to the server and then the server sends back to the client to confirm the message. Afterwards, the client sends its information for verification and then the server authenticates it and sends back information to the client. This happens using SSL and TLS through port 80 in this case for http and port 443 for https.
+
+## Security
 
 We have SSH keys implemented to limit who can access the servers in order to limit the exposure. IPs will also be whitelisted for access to the server as well in order to limit intrusion attempts. Login attempts will be managed by auto0 so although there may be possible zero day vulnerabilities, we are relying on their maintenance to keep our website secure after development.
 
