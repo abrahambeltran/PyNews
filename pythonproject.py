@@ -7,11 +7,10 @@ from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, url_for
 
 
-
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
-    
+
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
 
@@ -26,8 +25,6 @@ oauth.register(
     },
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
-
-@app.route("/")
 
 @app.route("/login")
 def login():
@@ -60,6 +57,10 @@ def logout():
 def home():
     return render_template("home.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
 
+@app.route("/about")
+def about():
+    return "<h1>About Page</h1>"
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host='157.230.11.9', port=env.get("PORT", 3000))
