@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% block title %}
+    {% if title %}{{ title }} - PYNEWS{% else %}PYNEWS{% endif %}
+{% endblock %}
+</head>
+<body>
+{% block navbar %}
+<nav class="navbar navbar-default">
+  <div class="container">
+        <ul class="nav navbar-nav navbar-right">
+            {% if session %}
+            <li><a href="/">Home</a></li>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/login">Login</a></li>
+            {% endif %}
+        </ul>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {# application content needs to be provided in the app_content block #}
+        {% if session %}
+        <table class="table table-striped">
+          {% block app_content %}{% endblock %}
+        </table>
+        {% else %}
+        <h2>WELCOME TO PY NEWS WHERE WE HAVE THE NEWS FOR YOUS</h2>
+        {% endif %}
+    </div>
+{% endblock %}
+</body>
+</html>
