@@ -39,7 +39,6 @@ for i in info:
    			"INSERT or REPLACE INTO news (theindic,id,url,title,by,time) VALUES (:theindic, :id, :url, :title, :by, :time)", info[count]
 		)
 	count = count + 1
-print('done')
 
 connection.commit()
 connection.close()

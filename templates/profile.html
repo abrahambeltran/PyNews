@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block app_content %}
-      <h3>Username: {{session.userinfo.name}} Email:{{session.userinfo.email}}</h3>
+      <h3>Username: {{session.userinfo.name}}</h3>
+      <h3>Email: {{session.userinfo.email}}</h3>
       <img src={{session.userinfo.picture}} alt={{session.userinfo.name}} />
 {% endblock %}
