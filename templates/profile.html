@@ -3,4 +3,29 @@
       <h3>Username: {{session.userinfo.name}}</h3>
       <h3>Email: {{session.userinfo.email}}</h3>
       <img src={{session.userinfo.picture}} alt={{session.userinfo.name}} />
+      {% for userlike in userlikes %}
+      {% if session.userinfo.email == userlike[0] %}
+            <tbody>
+            <tr>
+            <th scope="row">{{ userlike[0] }}</th>
+            <td scope="col"><a href="{{ userlike[1] }}">{{ userlike[2] }}</a></td>
+            <td scope="col">By {{ userlike[3] }} on {{ userlike[4] }}</td>
+            <td scope="col">
+                  <div class="btn-group-toggle" data-toggle="buttons">
+                  {% if userlike[5] %}
+                  <label class="btn btn-secondary">
+                  <input type="radio" autocomplete="off" checked="true"> Like
+                  </label>
+                  {% endif %}
+                  {% if userlike[6] %}
+                  <label class="btn btn-secondary">
+                  <input type="radio" autocomplete="off" checked="true"> Dislike
+                  </label>
+                  {% endif %}
+                  </div>
+            </td>
+            </tr>
+            </tbody>
+      {% endif %}
+      {% endfor %}
 {% endblock %}
