@@ -1,5 +1,4 @@
 import json
-import requests
 import sqlite3
 
 from flask_crontab import Crontab
@@ -33,10 +32,6 @@ connection = sqlite3.connect('newsinfo.db')
 cursor = connection.cursor()
 cursor1 = cursor.execute('SELECT theindic,url,title,by,time FROM news')
 posts = cursor1.fetchall()
-cursor2 = cursor.execute('SELECT email,admin FROM useradmin')
-admins = cursor2.fetchall()
-cursor3 = cursor.execute('SELECT email,url,title,by,time,like,dislike,likeid FROM userlikes')
-userlikes = cursor3.fetchall()
 
 @app.route("/login")
 def login():
@@ -67,6 +62,8 @@ def logout():
 
 @app.route("/")
 def home():
+    cursor1 = cursor.execute('SELECT theindic,url,title,by,time FROM news')
+    posts = cursor1.fetchall()
     return render_template("home.html", session=session.get('user'),
     pretty=json.dumps(session.get('user'), indent=4), posts=posts)
 
@@ -75,15 +72,23 @@ def profile():
     return render_template("profile.html", session=session.get('user'),
     pretty=json.dumps(session.get('user'), indent=4))
 
-@app.route("/admin")
-def admin():
-    return render_template("admin.html", session=session.get('user'),
-    pretty=json.dumps(session.get('user'), indent=4), userlikes=userlikes, admins=admins)
-
 @app.route("/delete/<likeid>", methods=['GET', 'POST'])
 def delete(likeid):
     sql = 'DELETE FROM userlikes WHERE likeid=' + likeid
     connection.execute(sql)
-    return redirect('/admin')
+    connection.commit()
+    cursor3 = cursor.execute('SELECT email,url,title,by,time,like,dislike,likeid FROM userlikes')
+    cursor3.fetchall()
+    return admin()
+
+@app.route("/admin")
+def admin():
+    cursor2 = cursor.execute('SELECT email,admin FROM useradmin')
+    admins = cursor2.fetchall()
+    cursor3 = cursor.execute('SELECT email,url,title,by,time,like,dislike,likeid FROM userlikes')
+    userlikes = cursor3.fetchall()
+    return render_template("admin.html", session=session.get('user'),
+    pretty=json.dumps(session.get('user'), indent=4), userlikes=userlikes, admins=admins)
+
 if __name__ == "__main__":
     app.run(host='157.230.11.9', port=env.get("PORT", 3000), debug=True)
