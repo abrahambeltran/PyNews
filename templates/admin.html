@@ -1,24 +1,31 @@
 {% extends "base.html" %}
 {% block app_content %}
-    {% for post in posts %}
+{% for admin in admins%}
+  {% if session.userinfo.email == admin[0] %}
+    {% for userlike in userlikes %}
       <tbody>
         <tr>
-          <th scope="row">x</th>
-          <td scope="col"><a href="/">x</a></td>
-          <td scope="col">By x on x</td>
+          <th scope="row">{{ userlike[0] }}</th>
+          <td scope="col"><a href="{{ userlike[1] }}">{{ userlike[2] }}</a></td>
+          <td scope="col">By {{ userlike[3] }} on {{ userlike[4] }}</td>
           <td scope="col">
             <div class="btn-group-toggle" data-toggle="buttons">
+              {% if userlike[5] %}
               <label class="btn btn-secondary">
-                <input type="radio" autocomplete="off"> Like
+                <input type="radio" autocomplete="off" checked="true"> Like
               </label>
+              {% endif %}
+              {% if userlike[6] %}
               <label class="btn btn-secondary">
-                <input type="radio" autocomplete="off"> Dislike
+                <input type="radio" autocomplete="off" checked="true"> Dislike
               </label>
+              {% endif %}
             </div>
           </td>
-          <td scope="col"><button type="button" class="btn btn-danger">Delete</button></td>
-          
+          <td scope="col"><form action="/delete/{{ userlike[7] }}" method="post"><input type="submit" value="Delete"></form></td>
         </tr>
       </tbody>
     {% endfor %}
+  {% endif %}
+{% endfor %}
 {% endblock %}

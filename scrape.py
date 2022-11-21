@@ -1,5 +1,6 @@
 import requests
 import json
+import datetime
 import sqlite3
 
 response_API = requests.get('https://hacker-news.firebaseio.com/v0/topstories.json')
@@ -26,13 +27,14 @@ news(
     url TEXT,
     title TEXT,
     by TEXT,
-    time REAL
+    time INTEGER
 )
 """)
 count = 0
 for i in info:
 	if 'url' in info[count]:
 		info[count]['theindic'] = int(count)
+		info[count]['time'] = datetime.datetime.fromtimestamp(info[count]['time'])
 		cursor.execute(
    			"INSERT or REPLACE INTO news (theindic,id,url,title,by,time) VALUES (:theindic, :id, :url, :title, :by, :time)", info[count]
 		)
