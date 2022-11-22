@@ -7,7 +7,7 @@ from urllib.parse import quote_plus, urlencode
 
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, redirect, render_template, session, url_for, request
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -30,8 +30,10 @@ oauth.register(
 
 connection = sqlite3.connect('newsinfo.db')
 cursor = connection.cursor()
-cursor1 = cursor.execute('SELECT theindic,url,title,by,time FROM news')
+cursor1 = cursor.execute('SELECT theindic,url,title,by,time,id FROM news')
 posts = cursor1.fetchall()
+cursor3 = cursor.execute('SELECT email,url,title,by,time,like,dislike,likeid FROM userlikes')
+cursor3.fetchall()
 
 @app.route("/login")
 def login():
@@ -66,7 +68,7 @@ def logout():
 @app.route("/")
 def home():
     """Main entry point for the home page of the website"""
-    cursor1 = cursor.execute('SELECT theindic,url,title,by,time FROM news')
+    cursor1 = cursor.execute('SELECT theindic,url,title,by,time,id FROM news')
     posts = cursor1.fetchall()
     return render_template("home.html", session=session.get('user'),
     pretty=json.dumps(session.get('user'), indent=4), posts=posts)
@@ -88,6 +90,42 @@ def delete(likeid):
     cursor3 = cursor.execute('SELECT email,url,title,by,time,like,dislike,likeid FROM userlikes')
     cursor3.fetchall()
     return admin()
+
+@app.route("/like/<postid>", methods=['GET', 'POST'])
+def like(postid):
+    """Flask route for liking a post to input to userlikes table"""
+    sql = 'SELECT id FROM news WHERE id=' + postid
+    likecursor = cursor.execute(sql)
+    post = likecursor.fetchall()
+    email = request.form.get("email")
+    url = request.form.get("url")
+    title = request.form.get("title")
+    by = request.form.get("by")
+    time = request.form.get("time")
+    first = 'INSERT or REPLACE INTO userlikes(email, id, url, title, by, time, like) '
+    second = 'VALUES (?,?,?,?,?,?,?)'
+    insertsql = first + second
+    cursorins = connection.execute(insertsql,(email,str(postid),url,title,by,str(time),1))
+    connection.commit()
+    return home()
+
+@app.route("/dislike/<postid>", methods=['GET', 'POST'])
+def dislike(postid):
+    """Flask route for liking a post to input to userlikes table"""
+    sql = 'SELECT id FROM news WHERE id=' + postid
+    likecursor = cursor.execute(sql)
+    post = likecursor.fetchall()
+    email = request.form.get("email")
+    url = request.form.get("url")
+    title = request.form.get("title")
+    by = request.form.get("by")
+    time = request.form.get("time")
+    first = 'INSERT or REPLACE INTO userlikes(email, id, url, title, by, time, dislike) '
+    second = 'VALUES (?,?,?,?,?,?,?)'
+    insertsql = first + second
+    cursorins = connection.execute(insertsql,(email,str(postid),url,title,by,str(time),1))
+    connection.commit()
+    return home()
 
 @app.route("/admin")
 def admin():

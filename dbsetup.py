@@ -1,6 +1,3 @@
-import requests
-import json
-import datetime
 import sqlite3
 
 # define cursor and connection
@@ -10,9 +7,9 @@ cursor = connection.cursor()
 #create news table
 cursor.execute("""CREATE TABLE IF NOT EXISTS
 userlikes(
-    likeid INTEGER PRIMARYKEY,
+    likeid INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT,
-    id INTEGER,
+    id INTEGER UNIQUE,
     url INTEGER,
     title TEXT,
     by TEXT,
