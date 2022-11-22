@@ -9,6 +9,13 @@ Members:
 
     Abraham Beltran                     ab19bb
 
+
+## Project information
+This is a flask web application written with only flask and html that fetches news from the hackernews api every hour and displays it with the option of liking or disliking each post. Likes and dislikes are displayed in the profile tab as well as under the admin tab where those with permissions can access, view, and delete any likes or dislikes from the database. All information about likes/dislikes as well as the latest news are kept in an sqlite database for persistent web storage. It is deployed with nginx and gunicorn in order to keep the highest level of security.
+
+## Installation
+clone the repo into your server and install requirements while specifying the requirements.txt file. For nginx and gunicorn, first setup nginx as normal and use certbot to get an ssl certificate. Then link gunicorn with the wsgi file.
+
 ![](/illustration.png)
 
 ## curl abrahambeltran.dev (domain being used)
