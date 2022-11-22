@@ -1,19 +1,20 @@
-import requests
+"""Python script for scraping HN api and putting data into the database"""
 import json
 import datetime
 import sqlite3
+import requests
 
 response_API = requests.get('https://hacker-news.firebaseio.com/v0/topstories.json')
 data = response_API.text
 parse_json = json.loads(data)
-count = 0
+COUNT = 0
 info = []
 for i in parse_json:
-	url = "https://hacker-news.firebaseio.com/v0/item/" + str(i) + ".json?print=pretty"
-	resp = requests.get(url)
-	jsonthing = resp.json()
-	info.append(jsonthing)
-	count = count + 1
+    URL = "https://hacker-news.firebaseio.com/v0/item/" + str(i) + ".json?print=pretty"
+    resp = requests.get(URL)
+    jsonthing = resp.json()
+    info.append(jsonthing)
+    COUNT = COUNT + 1
 
 # define cursor and connection
 connection = sqlite3.connect('newsinfo.db')
@@ -30,15 +31,15 @@ news(
     time INTEGER
 )
 """)
-count = 0
+COUNT = 0
 for i in info:
-	if 'url' in info[count]:
-		info[count]['theindic'] = int(count)
-		info[count]['time'] = datetime.datetime.fromtimestamp(info[count]['time'])
-		cursor.execute(
-   			"INSERT or REPLACE INTO news (theindic,id,url,title,by,time) VALUES (:theindic, :id, :url, :title, :by, :time)", info[count]
-		)
-	count = count + 1
+    if 'url' in info[COUNT]:
+        info[COUNT]['theindic'] = int(COUNT)
+        info[COUNT]['time'] = datetime.datetime.fromtimestamp(info[COUNT]['time'])
+        cursor.execute(
+            "INSERT or REPLACE INTO news (theindic,id,url,title,by,time) VALUES (:theindic, :id, :url, :title, :by, :time)", info[COUNT]
+        )
+    COUNT = COUNT + 1
 
 connection.commit()
 connection.close()
