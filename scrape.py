@@ -4,14 +4,14 @@ import datetime
 import sqlite3
 import requests
 
-response_API = requests.get('https://hacker-news.firebaseio.com/v0/topstories.json')
+response_API = requests.get('https://hacker-news.firebaseio.com/v0/topstories.json', timeout=1000)
 data = response_API.text
 parse_json = json.loads(data)
 COUNT = 0
 info = []
 for i in parse_json:
     URL = "https://hacker-news.firebaseio.com/v0/item/" + str(i) + ".json?print=pretty"
-    resp = requests.get(URL)
+    resp = requests.get(URL, timeout=1000)
     jsonthing = resp.json()
     info.append(jsonthing)
     COUNT = COUNT + 1

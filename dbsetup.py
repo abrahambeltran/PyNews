@@ -1,3 +1,4 @@
+'''Database setup file for building the userlikes and user admin tables'''
 import sqlite3
 
 # define cursor and connection

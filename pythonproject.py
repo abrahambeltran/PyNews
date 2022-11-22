@@ -95,8 +95,7 @@ def delete(likeid):
 def like(postid):
     """Flask route for liking a post to input to userlikes table"""
     sql = 'SELECT id FROM news WHERE id=' + postid
-    likecursor = cursor.execute(sql)
-    post = likecursor.fetchall()
+    cursor.execute(sql)
     email = request.form.get("email")
     url = request.form.get("url")
     title = request.form.get("title")
@@ -105,7 +104,7 @@ def like(postid):
     first = 'INSERT or REPLACE INTO userlikes(email, id, url, title, by, time, like) '
     second = 'VALUES (?,?,?,?,?,?,?)'
     insertsql = first + second
-    cursorins = connection.execute(insertsql,(email,str(postid),url,title,by,str(time),1))
+    connection.execute(insertsql,(email,str(postid),url,title,by,str(time),1))
     connection.commit()
     return home()
 
@@ -113,8 +112,7 @@ def like(postid):
 def dislike(postid):
     """Flask route for liking a post to input to userlikes table"""
     sql = 'SELECT id FROM news WHERE id=' + postid
-    likecursor = cursor.execute(sql)
-    post = likecursor.fetchall()
+    cursor.execute(sql)
     email = request.form.get("email")
     url = request.form.get("url")
     title = request.form.get("title")
@@ -123,7 +121,7 @@ def dislike(postid):
     first = 'INSERT or REPLACE INTO userlikes(email, id, url, title, by, time, dislike) '
     second = 'VALUES (?,?,?,?,?,?,?)'
     insertsql = first + second
-    cursorins = connection.execute(insertsql,(email,str(postid),url,title,by,str(time),1))
+    connection.execute(insertsql,(email,str(postid),url,title,by,str(time),1))
     connection.commit()
     return home()
 
